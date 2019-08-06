@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const faker = require("faker");
+
 const express = require("express");
+const exphbs = require('express-handlebars');
+const path = require('path')
+
 
 const UserModel = require("./models/user");
 
@@ -43,7 +47,22 @@ const main = async () => {
     console.log("API works http://localhost:3001");
 
     const app = express()
+
+    //ADD SETUP FOR express-handlebars
+
+    app.engine('handlebars', exphbs())
+    app.set('view engine', 'handlebars');
+    app.set('views', path.join(__dirname, './views'))
+
+
     app.get('/', async (req, res) => {
+        const users = await UserModel.find({}).exec({})
+        console.log("You're on home")
+        // Here it changes -> View Engine (Handlebars)
+        res.render('home', { users: users, title: "Homepage" })
+    })
+
+    app.get('/api', async (req, res) => {
         /* Pull data from DB */
         const users = await UserModel.find({}).exec({})
         res.json(users)
