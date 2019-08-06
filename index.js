@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const faker = require("faker");
+const express = require("express");
 
 const UserModel = require("./models/user");
 
@@ -30,12 +31,31 @@ const createFakeUsers = (amount = 5) =>
 
 const main = async () => {
     await db.dropCollection("users");
-    const fakeUser = createFakeUsers(1000);
+    const fakeUser = createFakeUsers(10);
     const fakeUserModels = fakeUser.map(user => new UserModel(user).save());
 
     await Promise.all(fakeUserModels);
-    console.log("Done");
-    process.exit(0);
+    console.log("Seed completed");
+
+
+
+    /* Show the data on localhost:3001 */
+    console.log("API works http://localhost:3001");
+
+    const app = express()
+    app.get('/', async (req, res) => {
+        /* Pull data from DB */
+        const users = await UserModel.find({}).exec({})
+        res.json(users)
+    })
+
+    await app.listen(3001)
+
+
+
+
+
+    //process.exit(0);
 };
 
 main();
