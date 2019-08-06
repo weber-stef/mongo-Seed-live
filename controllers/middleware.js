@@ -20,7 +20,7 @@ exports.run = async () => {
     app.get('/', async (req, res) => {
         const users = await UserModel.find({}).exec({})
         // console.log(users);
-        res.render('home', { users: users, title: "Homepage" })
+        res.render('home', { users, title: "Homepage" })
     })
 
     app.get('/api/', async (req, res) => {
@@ -32,7 +32,7 @@ exports.run = async () => {
     app.get('/user/:userId', async (req, res) => {
         const user = await UserModel.findById(req.params.userId).exec({})
         console.log(user);
-        res.render('user', { user: user, title: "User Info" })
+        res.render('user', { user, title: "User Info" })
     })
 
     app.get('/search/age/:age', async (req, res) => {
