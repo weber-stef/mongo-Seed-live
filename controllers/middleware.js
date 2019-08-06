@@ -29,7 +29,7 @@ exports.run = async () => {
         return res.send(users);
     })
 
-    app.get('/users/:userId', async (req, res) => {
+    app.get('/user/:userId', async (req, res) => {
         const user = await UserModel.findById(req.params.userId).exec({})
         console.log(user);
         res.render('user', { user: user, title: "User Info" })
@@ -44,6 +44,11 @@ exports.run = async () => {
                 search: true
             }
         )
+    })
+
+
+    app.get('/users/add', async (req, res) => {
+        res.render('add', { title: "Add User" })
     })
 
     console.log(`View user data on http://localhost:3000`);
