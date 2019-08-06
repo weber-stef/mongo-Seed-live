@@ -38,9 +38,14 @@ exports.run = async () => {
     app.get('/search/age/:age', async (req, res) => {
         const users = await UserModel.find({ age: { $gte: req.params.age } }).exec({})
         console.log(users);
-        res.render('home', { users: users, title: `Search by Age greater than ${req.params.age}`, search: true })
+        res.render('home',
+            { /* Variables we pass to the view engine */
+                users: users, title: `Search by Age greater than ${req.params.age}`,
+                search: true
+            }
+        )
     })
 
     console.log(`View user data on http://localhost:3000`);
-    await app.listen(3001)
+    await app.listen(3000)
 }
