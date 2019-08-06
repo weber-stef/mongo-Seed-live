@@ -16,7 +16,7 @@ exports.connect = async () => {
 
 /* Seeding the db */
 
-exports.seeding = async () => {
+exports.seed = async () => {
 
     console.log(`No Users in database, let's create some`);
 
