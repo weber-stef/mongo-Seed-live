@@ -3,7 +3,7 @@ const faker = require("faker");
 
 const express = require("express");
 const exphbs = require('express-handlebars');
-const path = require('path')
+const path = require('path');
 
 
 const UserModel = require("./models/user");
@@ -66,6 +66,16 @@ const main = async () => {
         /* Pull data from DB */
         const users = await UserModel.find({}).exec({})
         res.json(users)
+    })
+
+    app.get('/users/:userId', async (req, res) => {
+        // get the params -> _id
+        const userId = req.params.userId;
+        //fetch from the DB this user only (mongoose)
+        const user = await UserModel.findById(userId).exec({})
+        console.log(user)
+        //pass it to the view
+        res.render('user', { user: user, title: "Single user" })
     })
 
     await app.listen(3001)
