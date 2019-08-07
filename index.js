@@ -22,4 +22,6 @@ const main = async () => {
 
 main();
 
+// if there are errors concerning lochalhost allready running type killall -9 node in treminal and then resstart node index.js
+
 
